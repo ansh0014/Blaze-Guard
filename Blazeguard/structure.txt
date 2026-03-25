@@ -1,0 +1,64 @@
+📦 PROJECT ROOT
+│
+├── 📁 .vite/
+│   └── 📁 deps/
+│
+├── 📁 A2A/
+│   ├── 📁 agent/
+│   │   ├── 📁 citizenalert/
+│   │   │   └── 📁 server/
+│   │   │
+│   │   ├── 📁 detection/
+│   │   │   └── 📁 Server/
+│   │   │
+│   │   ├── 📁 logistics/
+│   │   │   ├── 📁 config/
+│   │   │   ├── 📁 db/
+│   │   │   └── 📁 server/
+│   │   │
+│   │   ├── 📁 prediction/
+│   │   │   └── 📁 server/
+│   │   │
+│   │   └── 📁 self/
+│   │       └── 📁 server/
+│   │
+│   └── 📁 shared/
+
+
+
+│
+├── 📁 Backend/
+│   └── 📁 Auth/
+│       ├── 📁 config/
+│       ├── 📁 database/
+│       ├── 📁 handler/
+│       ├── 📁 models/
+│       └── 📁 routes/
+│
+├── 📁 api-gateway/
+│   ├── 📁 cmd/
+│   └── 📁 internal/
+│       ├── 📁 config/
+│       ├── 📁 handler/
+│       └── 📁 middleware/
+│
+├── 📁 frontend/
+│   ├── 📁 public/
+│   └── 📁 src/
+│       ├── 📁 assets/
+│       ├── 📁 components/
+│       ├── 📁 context/
+│       ├── 📁 modules/
+│       │   ├── 📁 authority/
+│       │   │   └── 📁 views/
+│       │   │
+│       │   └── 📁 citizen/
+│       │       └── 📁 views/
+│       │
+│       ├── 📁 services/
+│       └── 📁 shared/
+│           ├── 📁 components/
+│           └── 📁 utils/
+│
+├── 📁 kafka/
+└── 📁 ml-model/

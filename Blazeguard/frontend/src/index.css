@@ -1,0 +1,65 @@
+@import "tailwindcss";
+
+@theme {
+  --color-fiery: #ff4d00;
+  --color-fiery-500: #ff4d00;
+  --color-fiery-600: #e64500;
+  --color-fiery-400: #ff6a2b;
+  /* Lighter shade for hover/text */
+  --color-fiery-900: #cc3d00;
+  /* Darker shade */
+  --color-fiery-glow: #ff4d0020;
+
+  --color-primary: #10b981;
+  --color-primary-light: #34d399;
+  --color-primary-dark: #059669;
+
+  --color-background: #0a0a0a;
+  --color-background-paper: #121212;
+
+  --font-sans: "Outfit", "Inter", sans-serif;
+}
+
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+
+  body {
+    background-color: #09090b;
+    /* zinc-950 */
+    color: #f4f4f5;
+    /* zinc-100 */
+    -webkit-font-smoothing: antialiased;
+    overflow: hidden;
+  }
+
+  /* Mapbox overrides */
+  div.mapboxgl-popup-content {
+    background-color: #27272a !important;
+    /* zinc-800 */
+    color: #f4f4f5 !important;
+    /* zinc-100 */
+    border-radius: 0.5rem !important;
+    border: 1px solid #3f3f46 !important;
+    /* zinc-700 */
+    padding: 0 !important;
+    box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1) !important;
+  }
+
+  div.mapboxgl-popup-tip {
+    border-top-color: #27272a !important;
+    /* zinc-800 */
+  }
+
+  div.mapboxgl-ctrl-group {
+    background-color: #27272a !important;
+    /* zinc-800 */
+    border: 1px solid #3f3f46 !important;
+    /* zinc-700 */
+  }
+
+  button.mapboxgl-ctrl-icon {
+    filter: invert(100%) brightness(100%) !important;
+  }
+}
