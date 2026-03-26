@@ -3,28 +3,32 @@ package main
 // in this code i have to check the spread prediction is implemented in my ai modle
 import (
 	s4 "blazeguard/agent/citizenalert/server"
+	"blazeguard/shared"
 	"context"
 	"encoding/json"
 	"fmt"
 	"log"
 	"os"
 
-	"github.com/joho/godotenv"
 	"github.com/segmentio/kafka-go"
 )
 
 func main() {
-	godotenv.Load("../../.env")
+shared.LoadEnv()
+
+if err := shared.RequireEnv("KAFKA_BROKER", "EVENT_VERSION"); err != nil {
+    log.Fatal(err)
+}
 	fmt.Println("[Citizen Alert Agent]")
 	s4.SetMessageHandler(handleA2AMessage)
 	go consumeTopic("fire_detected", handleFireDetected)
 	go consumeTopic("fire_prevention_check", handlePreventionCheck)
-	go s4.StartHTTPServer()
+	go s4.StartHTTPserver()
 	select {}
 }
 func consumeTopic(topic string, handler func([]byte)) {
 	reader := kafka.NewReader(kafka.ReaderConfig{
-		Brokers: []string{os.Getenv("KAFKA_BROKER")},
+		Brokers: []string{shared.GetEnv("KAFKA_BROKER", "localhost:9092")},
 		Topic:   topic,
 		GroupID: "citizen_alert_service_group_" + topic,
 	})

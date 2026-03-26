@@ -12,23 +12,28 @@ import (
 
 	s1 "blazeguard/agent/detection/Server"
 
-	"github.com/joho/godotenv"
+
 	"github.com/segmentio/kafka-go"
 )
 
 func main() {
-	godotenv.Load("../../.env")
+	
+shared.LoadEnv()
+
+if err := shared.RequireEnv("KAFKA_BROKER", "EVENT_VERSION"); err != nil {
+    log.Fatal(err)
+}
 
 	fmt.Println("[Detection Agent] Starting Kafka consumer...")
 	go consumeKafka()
-	go s1.StartHTTPServer()
+	go s1.StartHTTPserver()
 
 	select {}
 }
 
 func consumeKafka() {
 	reader := kafka.NewReader(kafka.ReaderConfig{
-		Brokers:  []string{os.Getenv("KAFKA_BROKER")},
+		Brokers:  []string{shared.GetEnv("KAFKA_BROKER", "localhost:9092")},
 		Topic:    "yolo_fire_events",
 		GroupID:  "detection-agent-group",
 		MinBytes: 1,

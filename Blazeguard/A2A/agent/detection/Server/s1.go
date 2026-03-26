@@ -9,7 +9,7 @@ import (
 	"blazeguard/shared"
 )
 
-func StartHTTPServer() {
+func StartHTTPserver() {
 
 	http.HandleFunc("/health", func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "application/json")

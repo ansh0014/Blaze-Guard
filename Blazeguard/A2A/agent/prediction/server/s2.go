@@ -18,7 +18,7 @@ func SetMessageHandler(handler MessageHandler) {
 	messageHandler = handler
 }
 
-func StartHTTPServer() {
+func StartHTTPserver() {
 
 	http.HandleFunc("/health", func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "application/json")

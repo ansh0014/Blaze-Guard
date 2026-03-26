@@ -7,30 +7,33 @@ import (
 	"fmt"
 	"log"
 
-	"os"
+	
 
 	s2 "blazeguard/agent/prediction/server"
 
-	"github.com/joho/godotenv"
 	"github.com/segmentio/kafka-go"
 )
 
 func main() {
-	godotenv.Load("../../.env")
+shared.LoadEnv()
 
+if err := shared.RequireEnv("KAFKA_BROKER", "EVENT_VERSION"); err != nil {
+    log.Fatal(err)
+}
+ 
 	fmt.Println("[Prediction Agent] Starting...")
 
 	s2.SetMessageHandler(handleA2AMessage)
 	go consumeTopic("wheather_fire_predictions", handleWeatherPrediction)
 	go consumeTopic("fire_detected", handleConfirmedFire)
 
-	go s2.StartHTTPServer()
+	go s2.StartHTTPserver()
 
 	select {}
 }
 func consumeTopic(topic string, handler func([]byte)) {
 	reader := kafka.NewReader(kafka.ReaderConfig{
-		Brokers: []string{os.Getenv("KAFKA_BROKER")},
+		Brokers: []string{shared.GetEnv("KAFKA_BROKER", "localhost:9092")},
 		Topic:   topic,
 		GroupID: "prediction_service_group" + topic,
 	})
