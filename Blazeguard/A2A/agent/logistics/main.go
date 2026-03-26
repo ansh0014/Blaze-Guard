@@ -30,7 +30,7 @@ func main() {
     go consumeTopic("fire_detected", handleFireEvent)
     go consumeTopic("fire_prevention_check", handlePreventionCheck)
 
-    go s3.StartHTTPserver()
+    go s3.StartHTTPServer()
 
     select {}
 }

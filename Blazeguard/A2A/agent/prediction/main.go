@@ -27,7 +27,7 @@ if err := shared.RequireEnv("KAFKA_BROKER", "EVENT_VERSION"); err != nil {
 	go consumeTopic("wheather_fire_predictions", handleWeatherPrediction)
 	go consumeTopic("fire_detected", handleConfirmedFire)
 
-	go s2.StartHTTPserver()
+	go s2.StartHTTPServer()
 
 	select {}
 }

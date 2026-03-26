@@ -23,7 +23,7 @@ if err := shared.RequireEnv("KAFKA_BROKER", "EVENT_VERSION"); err != nil {
 	s4.SetMessageHandler(handleA2AMessage)
 	go consumeTopic("fire_detected", handleFireDetected)
 	go consumeTopic("fire_prevention_check", handlePreventionCheck)
-	go s4.StartHTTPserver()
+	go s4.StartHTTPServer()
 	select {}
 }
 func consumeTopic(topic string, handler func([]byte)) {

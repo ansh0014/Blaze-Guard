@@ -43,7 +43,7 @@ func main() {
 	go consumeTopic("logistics_routes", handleLogisticsEvent)
 	go consumeTopic("citizen_alerts", handleCitizenAlertEvent)
 	go reportLoop()
-	go s5.StartHTTPserver()
+	go s5.StartHTTPServer()
 	select {}
 }
 func consumeTopic(topic string, handler func([]byte)) {

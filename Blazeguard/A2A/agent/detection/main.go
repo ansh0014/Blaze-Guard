@@ -26,7 +26,7 @@ if err := shared.RequireEnv("KAFKA_BROKER", "EVENT_VERSION"); err != nil {
 
 	fmt.Println("[Detection Agent] Starting Kafka consumer...")
 	go consumeKafka()
-	go s1.StartHTTPserver()
+	go s1.StartHTTPServer()
 
 	select {}
 }
