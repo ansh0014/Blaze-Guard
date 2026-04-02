@@ -37,7 +37,7 @@ Core goals:
 - **Data**:
   - PostgreSQL / PostGIS (geospatial logistics)
   - Redis / Redis Cloud (state/cache)
-  - pgvector (planned/optional long-term memory use)
+  - **Oracle AI Database 26ai (AI agent memory / vector memory)**
 
 ---
 
@@ -113,7 +113,7 @@ Blaze-Guard/
 
 ---
 # System Design
-![alt text](image.png)
+![alt text](image-1.png)
 
 ## Prerequisites
 
@@ -141,6 +141,9 @@ Create `.env` files per service (do **not** commit secrets). Typical keys:
 - `DATABASE_URL=...` (optional unified DB URL)
 - `REDIS_URL=rediss://...`
 - `REDIS_PASSWORD=...`
+- `ORACLE_AI_DB_DSN=...`
+- `ORACLE_AI_DB_USER=...`
+- `ORACLE_AI_DB_PASSWORD=...`
 - Firebase credentials/env for auth service
 
 ---
