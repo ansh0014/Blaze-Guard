@@ -159,3 +159,6 @@ Reference: `MD/contracts.md`
 - gRPC orchestrator scaffold exists
 - Docker local infra model is correct
 - Remaining work is production hardening (contracts, reliability, cloud ops)
+
+
+

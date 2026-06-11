@@ -13,7 +13,6 @@ import (
 	"google.golang.org/grpc/status"
 	"google.golang.org/protobuf/types/known/structpb"
 )
-
 type Server struct {
 	pb.UnimplementedOrchestratorServiceServer
 	reg       *registry.AgentRegistry
