@@ -9,7 +9,6 @@ AI-driven wildfire detection, prediction, logistics routing, and citizen alertin
 Blaze-Guard processes fire-related signals (satellite/event streams + ML outputs), routes decisions through specialized agents, and sends actionable alerts in near real-time.
 
 Core goals:
-
 - Detect potential wildfire incidents
 - Predict spread and risk
 - Dispatch fastest logistics routes
@@ -225,7 +224,6 @@ Main RPCs:
 - `Health`
 - `ListAgents`
 - `RouteMessage`
-
 Use gRPC for internal service-control paths; keep REST for frontend compatibility.
 
 ---
@@ -257,8 +255,8 @@ See:
 
 ## Contributors
 
-- ML: Mahi, Abhinandan
-- Frontend: Rishank
+- ML:Abhinandan
+- Frontend: Rishank, Mahi
 - Backend/Infra/Integration: Anshul
 
 ---
