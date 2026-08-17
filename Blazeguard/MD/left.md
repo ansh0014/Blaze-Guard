@@ -1,23 +1,23 @@
 # Work Left (Current Status)
 
 ## Overall Progress
-- **Estimated done:** 70%
-- **Estimated left:** 30%
+- **Estimated done:** 85%
+- **Estimated left:** 15%
 
 ---
 
 ## 1) Critical Left (Must finish before deployment)
 
 ### A. Data + Infra
-- [ ] Move Logistics DB to cloud-ready config (PostGIS connection via env)
-- [ ] Add migration + seed for fire stations
-- [ ] Integrate **Redis Cloud** in orchestrator state (TLS/auth)
+- [x] Move Logistics DB to cloud-ready config (PostGIS connection via env)
+- [x] Add migration + seed for fire stations
+- [x] Integrate **Redis Cloud** in orchestrator state (TLS/auth)
 - [ ] Finalize Kafka topics + DLQ topics
 
 ### B. Secrets & Env
-- [ ] Centralize environment variables across all services
-- [ ] Remove hardcoded values and local-only assumptions
-- [ ] Add `.env.example` for each service
+- [x] Centralize environment variables across all services
+- [x] Remove hardcoded values and local-only assumptions
+- [x] Add `.env.example` for each service
 - [ ] Validate startup fails clearly when key env is missing
 
 ### C. Contracts
@@ -45,7 +45,7 @@
 - [ ] Add failure fallback when Mapbox unavailable
 
 ### C. Citizen Alert
-- [ ] Replace mock alert senders with real provider integration (SMS/Push/Email)
+- [x] Replace mock alert senders with real provider integration (SMS/Push/Email)
 - [ ] Add alert deduplication and escalation rules
 
 ### D. Self Agent
@@ -60,7 +60,7 @@
 - [ ] End-to-end tests: Detection → Prediction → Logistics → Citizen Alert → Self
 - [ ] Observability: structured logs, request IDs, metrics dashboard
 - [ ] Linux-safe path and import cleanup (case sensitivity)
-- [ ] Docker Compose full stack run for one-command local startup
+- [x] Docker Compose full stack run for one-command local startup
 
 ---
 

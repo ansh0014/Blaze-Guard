@@ -24,12 +24,13 @@ type FirebaseConfig struct {
 }
 
 type DatabaseConfig struct {
-	Host     string
-	Port     string
-	User     string
-	Password string
-	DBName   string
-	SSLMode  string
+	Host        string
+	Port        string
+	User        string
+	Password    string
+	DBName      string
+	SSLMode     string
+	DatabaseURL string
 }
 
 type SessionConfig struct {
@@ -49,12 +50,13 @@ func Load() (*Config, error) {
 			CredentialsPath: os.Getenv("FIREBASE_CREDENTIALS_PATH"),
 		},
 		Database: DatabaseConfig{
-			Host:     os.Getenv("DB_HOST"),
-			Port:     os.Getenv("DB_PORT"),
-			User:     os.Getenv("DB_USER"),
-			Password: os.Getenv("DB_PASSWORD"),
-			DBName:   os.Getenv("DB_NAME"),
-			SSLMode:  os.Getenv("DB_SSLMODE"),
+			Host:        os.Getenv("DB_HOST"),
+			Port:        os.Getenv("DB_PORT"),
+			User:        os.Getenv("DB_USER"),
+			Password:    os.Getenv("DB_PASSWORD"),
+			DBName:      os.Getenv("DB_NAME"),
+			SSLMode:     os.Getenv("DB_SSLMODE"),
+			DatabaseURL: os.Getenv("DATABASE_URL"),
 		},
 		Session: SessionConfig{
 			Secret: os.Getenv("SESSION_SECRET"),
@@ -79,23 +81,25 @@ func (c *Config) Validate() error {
 	if c.Firebase.CredentialsPath == "" {
 		return fmt.Errorf("FIREBASE_CREDENTIALS_PATH is required")
 	}
-	if c.Database.Host == "" {
-		return fmt.Errorf("DB_HOST is required")
-	}
-	if c.Database.Port == "" {
-		return fmt.Errorf("DB_PORT is required")
-	}
-	if c.Database.User == "" {
-		return fmt.Errorf("DB_USER is required")
-	}
-	if c.Database.Password == "" {
-		return fmt.Errorf("DB_PASSWORD is required")
-	}
-	if c.Database.DBName == "" {
-		return fmt.Errorf("DB_NAME is required")
-	}
-	if c.Database.SSLMode == "" {
-		return fmt.Errorf("DB_SSLMODE is required")
+	if c.Database.DatabaseURL == "" {
+		if c.Database.Host == "" {
+			return fmt.Errorf("DB_HOST is required if DATABASE_URL is not set")
+		}
+		if c.Database.Port == "" {
+			return fmt.Errorf("DB_PORT is required if DATABASE_URL is not set")
+		}
+		if c.Database.User == "" {
+			return fmt.Errorf("DB_USER is required if DATABASE_URL is not set")
+		}
+		if c.Database.Password == "" {
+			return fmt.Errorf("DB_PASSWORD is required if DATABASE_URL is not set")
+		}
+		if c.Database.DBName == "" {
+			return fmt.Errorf("DB_NAME is required if DATABASE_URL is not set")
+		}
+		if c.Database.SSLMode == "" {
+			return fmt.Errorf("DB_SSLMODE is required if DATABASE_URL is not set")
+		}
 	}
 	if c.Session.Secret == "" {
 		return fmt.Errorf("SESSION_SECRET is required")
@@ -107,6 +111,9 @@ func (c *Config) Validate() error {
 }
 
 func (c *Config) GetDatabaseDSN() string {
+	if c.Database.DatabaseURL != "" {
+		return c.Database.DatabaseURL
+	}
 	return fmt.Sprintf(
 		"host=%s port=%s user=%s password=%s dbname=%s sslmode=%s",
 		c.Database.Host,

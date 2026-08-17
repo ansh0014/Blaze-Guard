@@ -21,11 +21,11 @@ type A2AMessage struct {
 
 type MessageRouter struct {
 	registry *registry.AgentRegistry
-	store    *state.InMemoryStore
+	store    state.Store
 	client   *http.Client
 }
 
-func NewMessageRouter(reg *registry.AgentRegistry, store *state.InMemoryStore) *MessageRouter {
+func NewMessageRouter(reg *registry.AgentRegistry, store state.Store) *MessageRouter {
 	return &MessageRouter{
 		registry: reg,
 		store:    store,

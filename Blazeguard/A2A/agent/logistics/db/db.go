@@ -2,12 +2,16 @@ package database
 
 import (
 	"database/sql"
+	"embed"
 	"fmt"
 	"log"
 	"os"
 
 	_ "github.com/lib/pq"
 )
+
+//go:embed migrations/*.sql
+var migrationFS embed.FS
 
 var DB *sql.DB
 
@@ -36,14 +40,24 @@ type RouteStep struct {
 
 func InitDB() {
 	var err error
-	connStr := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable",
-		os.Getenv("DB_HOST"),
-		os.Getenv("DB_PORT"),
-		os.Getenv("DB_USER"),
-		os.Getenv("DB_PASSWORD"),
-		os.Getenv("DB_NAME"),
+	var connStr string
 
-	)
+	if dbURL := os.Getenv("DATABASE_URL"); dbURL != "" {
+		connStr = dbURL
+	} else {
+		sslMode := os.Getenv("DB_SSLMODE")
+		if sslMode == "" {
+			sslMode = "disable"
+		}
+		connStr = fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=%s",
+			os.Getenv("DB_HOST"),
+			os.Getenv("DB_PORT"),
+			os.Getenv("DB_USER"),
+			os.Getenv("DB_PASSWORD"),
+			os.Getenv("DB_NAME"),
+			sslMode,
+		)
+	}
 
 	DB, err = sql.Open("postgres", connStr)
 	if err != nil {
@@ -55,6 +69,39 @@ func InitDB() {
 	}
 
 	fmt.Println("[Logistics] Connected to PostgreSQL with PostGIS")
+
+	if err := runMigrations(); err != nil {
+		log.Fatal("[Logistics] PostgreSQL migrations failed:", err)
+	}
+}
+
+func runMigrations() error {
+	fmt.Println("[Logistics] Running database migrations...")
+	files, err := migrationFS.ReadDir("migrations")
+	if err != nil {
+		return fmt.Errorf("failed to read migrations: %v", err)
+	}
+
+	for _, file := range files {
+		if file.IsDir() {
+			continue
+		}
+		filePath := "migrations/" + file.Name()
+		fmt.Printf("[Logistics] Applying migration: %s\n", file.Name())
+
+		content, err := migrationFS.ReadFile(filePath)
+		if err != nil {
+			return fmt.Errorf("failed to read migration file %s: %v", file.Name(), err)
+		}
+
+		_, err = DB.Exec(string(content))
+		if err != nil {
+			return fmt.Errorf("failed to execute migration %s: %v", file.Name(), err)
+		}
+	}
+
+	fmt.Println("[Logistics] PostgreSQL migrations applied successfully")
+	return nil
 }
 
 func GetNearbyFireStations(location map[string]float64, radiusKm float64) []FireStation {

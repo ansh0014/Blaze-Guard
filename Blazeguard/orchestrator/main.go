@@ -18,7 +18,7 @@ func main() {
 	reg := registry.NewAgentRegistry()
 	reg.BootstrapDefaults()
 
-	store := state.NewInMemoryStore()
+	store := state.GetStore()
 	msgRouter := router.NewMessageRouter(reg, store)
 
 	healthMonitor := monitor.NewHealthMonitor(reg, 15*time.Second)

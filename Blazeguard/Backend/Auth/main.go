@@ -2,6 +2,7 @@ package main
 
 import (
 	"database/sql"
+	
 	"fmt"
 	"log"
 	"net/http"
@@ -14,6 +15,9 @@ import (
 	"github.com/gorilla/sessions"
 	_ "github.com/lib/pq"
 )
+
+//go:embed database/migrations.sql
+var migrationsSQL string
 
 func main() {
 
@@ -34,6 +38,12 @@ func main() {
 		log.Fatalf("Failed to ping database: %v", err)
 	}
 	log.Println("Database connection established")
+
+	log.Println("Running database migrations...")
+	if _, err := db.Exec(migrationsSQL); err != nil {
+		log.Fatalf("Failed to run database migrations: %v", err)
+	}
+	log.Println("Database migrations completed successfully")
 
 	store := sessions.NewCookieStore([]byte(cfg.Session.Secret))
 	store.Options = &sessions.Options{

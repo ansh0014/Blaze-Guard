@@ -7,15 +7,15 @@ RUN go mod download
 
 COPY . .
 
-RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o /out/api-gateway ./cmd/main.go
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o /out/auth-service ./main.go
 
 FROM alpine:3.20
 
 WORKDIR /app
 RUN apk add --no-cache ca-certificates
 
-COPY --from=builder /out/api-gateway /app/api-gateway
+COPY --from=builder /out/auth-service /app/auth-service
 
-EXPOSE 8080
+EXPOSE 2000
 
-CMD ["/app/api-gateway"]
+CMD ["/app/auth-service"]

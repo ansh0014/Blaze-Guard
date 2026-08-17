@@ -71,7 +71,7 @@ func processYoloMessage(data []byte) {
 	confidence, _ := detection["confidence"].(float64)
 	zoneID, _ := event["zone_id"].(string)
 
-	if fireDetected && confidence > 0.75 { // i have to change the value when the ml model complete
+	if fireDetected && confidence > 0.50 { // updated threshold for YOLOv8 model
 		fmt.Printf("[Detection] FIRE CONFIRMED | Zone: %s | Confidence: %.2f\n", zoneID, confidence)
 		go shared.SendToAgent("CITIZEN_ALERT_AGENT", shared.A2AMessage{
 			From:      "detection_agent",
