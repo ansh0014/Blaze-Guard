@@ -36,9 +36,10 @@ pnpm-debug.log*
 .env.*
 *.env
 
-# allow template/sample env
+# allow template/sample env files everywhere in the repo
+!.env.example
+!**/.env.example
 !/.env.local
-!/.env.example
 
 # firebase / gcp secrets
 firebase-credentials.json
